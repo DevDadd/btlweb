@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./exerciselib.css">
+
+</head>
+
+<body class="page-fade">
+    <div class="bg bg-gradient-only" aria-hidden="true"></div>
+    <header class="app-bar">
+        <a href="index.html" class="logo">
+            GYM<span class="logo-highlight">PT</span>
+        </a>
+        <nav class="menu">
+            <a href="index.html">Home</a>
+            <a href="#">Exercises</a>
+            <a href="#">Workouts</a>
+            <a href="#">Profile</a>
+        </nav>
+    </header>
+    <div class="top-text-column exercise-hero">
+        <div class="top-text top-text-mixed">
+            Exercises <span class="logo-highlight">Library</span>
+        </div>
+        <div class="Sizedbox" aria-hidden="true"></div>
+        <div class="subtitle">Find the right exercise for every muscle group</div>
+        <div class="Sizedbox" aria-hidden="true"></div>
+        <div class="category-list">
+            <div class="category-item active">All</div>
+            <div class="category-item">Arms</div>
+            <div class="category-item">Legs</div>
+            <div class="category-item">Back</div>
+            <div class="category-item">Core</div>
+            <div class="category-item">Cardio</div>
+            <div class="category-item">Flexibility</div>
+            <div class="category-item">Balance</div>
+        </div>
+    </div>
+    <script>
+        const items = document.querySelectorAll(".category-item");
+
+        items.forEach((item) => {
+            item.addEventListener("click", () => {
+                document.querySelector(".category-item.active")?.classList.remove("active");
+                item.classList.add("active");
+            });
+        });
+    </script>
+</body>
+
+</html>

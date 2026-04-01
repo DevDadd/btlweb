@@ -1,0 +1,38 @@
+.category-list {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    /* scroll ngang */
+    padding: 12px;
+}
+
+.category-item {
+    padding: 10px 18px;
+    border-radius: 999px;
+    /* bo tròn pill */
+    border: 1px solid #ddd;
+    background: transparent;
+    color: white;
+    white-space: nowrap;
+    /* không xuống dòng */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid gray;
+}
+
+.category-item:hover {
+    background: linear-gradient(45deg, #ff3b3b, #e11d48, #ff8800);
+    color: white;
+    border: none;
+}
+
+.category-item.active {
+    background: linear-gradient(45deg, #ff3b3b, #e11d48, #ff8800);
+    color: white;
+    border: none;
+}
+
+/* Ẩn scrollbar cho đẹp */
+.category-list::-webkit-scrollbar {
+    display: none;
+}
