@@ -2,28 +2,27 @@
     display: flex;
     gap: 12px;
     overflow-x: auto;
-    /* scroll ngang */
     padding: 12px;
 }
 
 .category-item {
     padding: 10px 18px;
     border-radius: 999px;
-    /* bo tròn pill */
-    border: 1px solid #ddd;
+    border: 1px solid rgba(255, 255, 255, 0.35);
     background: transparent;
     color: white;
     white-space: nowrap;
-    /* không xuống dòng */
     cursor: pointer;
-    transition: all 0.2s ease;
-    border: 1px solid gray;
+    transition: transform 0.22s ease, box-shadow 0.22s ease,
+        background 0.22s ease, border-color 0.22s ease;
 }
 
 .category-item:hover {
+    transform: translateY(-4px);
     background: linear-gradient(45deg, #ff3b3b, #e11d48, #ff8800);
     color: white;
-    border: none;
+    border-color: transparent;
+    box-shadow: 0 8px 20px rgba(225, 29, 72, 0.45);
 }
 
 .category-item.active {
@@ -35,4 +34,43 @@
 /* Ẩn scrollbar cho đẹp */
 .category-list::-webkit-scrollbar {
     display: none;
+}
+
+.exercises-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.exercise-card {
+    background: rgba(255, 255, 255, 0.08);
+    width: 350px;
+    height: 200px;
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.22s ease, box-shadow 0.22s ease,
+        border-color 0.22s ease, background 0.22s ease;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    font-family: sans-serif;
+    font-weight: 700;
+}
+
+.exercise-card-text {
+    color: #fff;
+    font-size: 1.05rem;
+    line-height: 1.3;
+    text-align: center;
+}
+
+.exercise-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 122, 146, 0.35);
+    border-color: rgba(255, 182, 193, 0.45);
+    background: rgba(255, 255, 255, 0.12);
 }

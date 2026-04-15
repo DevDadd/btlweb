@@ -1,0 +1,122 @@
+.row {
+    position: relative;
+    z-index: 2;
+    margin-top: 120px;
+    margin-left: 300px;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.profile-stack {
+    position: relative;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: 0;
+}
+
+.profile-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid rgba(230, 81, 81, 0.782);
+    background: #eaeaea;
+    justify-content: start;
+    align-items: start;
+    overflow: visible;
+}
+
+.profile-avatar,
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+}
+
+.profile-avatar {
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-avatar img {
+    object-fit: cover;
+    display: block;
+}
+
+.camera-btn {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    transform: none;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    background: rgb(247, 107, 107);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    margin: 0;
+}
+
+.profile-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 50px;
+    margin-left: 8px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    margin: 0;
+}
+
+.email-info {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    margin-left: 4px;
+}
+
+.profile-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0 0 0 5px;
+}
+
+.sizedbox10 {
+    width: 10px;
+}
+
+.phone-info {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    margin-left: 4px;
+}
