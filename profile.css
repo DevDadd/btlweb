@@ -1,11 +1,65 @@
 .row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
     position: relative;
     z-index: 2;
+    gap: 20px;
+}
+
+.profile-row-wrapper {
     margin-top: 120px;
     margin-left: 300px;
-    gap: 20px;
-    justify-content: flex-start;
     align-items: center;
+}
+
+.summary-row {
+    margin-top: 40px;
+    margin-left: 300px;
+    margin-right: 40px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.summary-card {
+    height: 120px;
+    width: 350px;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgb(44, 44, 44);
+    border: 1px solid rgb(109, 109, 109);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.summary-card-icon {
+    color: red;
+    font-size: 25px;
+}
+
+.summary-card-value {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.summary-card-content {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+}
+
+.summary-card .column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .profile-stack {
