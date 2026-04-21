@@ -31,6 +31,13 @@
         <div class="Sizedbox" aria-hidden="true"></div>
         <div class="subtitle">Find the right exercise for every muscle group</div>
         <div class="Sizedbox" aria-hidden="true"></div>
+        <div class="search-wrapper">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search exercises by name..."
+                autocomplete="off" />
+            <button type="button" id="searchClear" class="search-clear" aria-label="Clear search">×</button>
+        </div>
+        <div class="Sizedbox" aria-hidden="true"></div>
         <div class="category-list">
             <div class="category-item active">All</div>
             <div class="category-item">Arms</div>
@@ -41,28 +48,93 @@
             <div class="category-item">Flexibility</div>
             <div class="category-item">Balance</div>
         </div>
-        <div class="exercises-grid">
-            <div class="exercise-card">
-                <div class="exercise-card-text">Squats</div>
-            </div>
-            <div class="exercise-card">Push-ups</div>
-            <div class="exercise-card">Pull-ups</div>
-            <div class="exercise-card">Lunges</div>
-            <div class="exercise-card">Planks</div>
-            <div class="exercise-card">Sit-ups</div>
-            <div class="exercise-card">Crunches</div>
-            <div class="exercise-card">Deadlifts</div>
+        <div class="exercises-grid" id="exercisesGrid">
+            <div class="exercise-loading">Loading exercises...</div>
         </div>
     </div>
     <script>
-        const items = document.querySelectorAll(".category-item");
+        const API_URL = "https://django2-yak8.onrender.com/api/exercises";
+        const grid = document.getElementById("exercisesGrid");
+        let allExercises = [];
+        let activeCategory = "All";
+        let searchTerm = "";
 
-        items.forEach((item) => {
+        function renderCards(list) {
+            if (!list.length) {
+                grid.innerHTML =
+                    '<div class="exercise-empty">No exercises found.</div>';
+                return;
+            }
+            grid.innerHTML = list
+                .map(
+                    (ex) => `
+                <div class="exercise-card">
+                    <div class="exercise-card-text">${ex.name}</div>
+                    <div class="exercise-muscle">${ex.muscle_group}</div>
+                    <div class="exercise-equipment">
+                        <span class="equipment-label">Equipment:</span>
+                        <span class="equipment-name">${ex.equipment?.name ?? "N/A"}</span>
+                    </div>
+                </div>`
+                )
+                .join("");
+        }
+
+        function applyFilter() {
+            const term = searchTerm.trim().toLowerCase();
+            const filtered = allExercises.filter((ex) => {
+                const matchCategory =
+                    activeCategory === "All" ||
+                    ex.muscle_group.toLowerCase() ===
+                    activeCategory.toLowerCase();
+                const matchSearch =
+                    !term || ex.name.toLowerCase().includes(term);
+                return matchCategory && matchSearch;
+            });
+            renderCards(filtered);
+        }
+
+        async function loadExercises() {
+            try {
+                const res = await fetch(API_URL);
+                const json = await res.json();
+                if (!json.success) throw new Error("API returned success=false");
+                allExercises = json.data ?? [];
+                applyFilter();
+            } catch (err) {
+                grid.innerHTML = `<div class="exercise-empty">Failed to load: ${err.message}</div>`;
+            }
+        }
+
+        document.querySelectorAll(".category-item").forEach((item) => {
             item.addEventListener("click", () => {
-                document.querySelector(".category-item.active")?.classList.remove("active");
+                document
+                    .querySelector(".category-item.active")
+                    ?.classList.remove("active");
                 item.classList.add("active");
+                activeCategory = item.textContent.trim();
+                applyFilter();
             });
         });
+
+        const searchInput = document.getElementById("searchInput");
+        const searchClear = document.getElementById("searchClear");
+
+        searchInput.addEventListener("input", (e) => {
+            searchTerm = e.target.value;
+            searchClear.classList.toggle("visible", searchTerm.length > 0);
+            applyFilter();
+        });
+
+        searchClear.addEventListener("click", () => {
+            searchInput.value = "";
+            searchTerm = "";
+            searchClear.classList.remove("visible");
+            applyFilter();
+            searchInput.focus();
+        });
+
+        loadExercises();
     </script>
 </body>
 
