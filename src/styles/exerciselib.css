@@ -100,7 +100,6 @@
     border: none;
 }
 
-/* Ẩn scrollbar cho đẹp */
 .category-list::-webkit-scrollbar {
     display: none;
 }
