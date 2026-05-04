@@ -1,7 +1,8 @@
-export default function Background({ gradientOnly = false }) {
+export default function Background({ gradientOnly = false, className = "" }) {
+  const base = `bg${gradientOnly ? " bg-gradient-only" : ""}`;
   return (
     <div
-      className={`bg${gradientOnly ? ' bg-gradient-only' : ''}`}
+      className={[base, className].filter(Boolean).join(" ")}
       aria-hidden="true"
     />
   );

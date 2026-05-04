@@ -3,6 +3,7 @@ import Home from './pages/Home.jsx';
 import Exercises from './pages/Exercises.jsx';
 import DetailExercise from './pages/DetailExercise.jsx';
 import Profile from './pages/Profile.jsx';
+import Login from './pages/Login.jsx';
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Route path="/exercises" element={<Exercises />} />
       <Route path="/exercises/:exerciseId" element={<DetailExercise />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   );
 }
