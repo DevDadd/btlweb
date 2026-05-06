@@ -18,8 +18,15 @@ export default function Login() {
     setIsSubmitting(true);
 
     try {
-      await login(username, password);
-      navigate("/");
+      const response = await login(username, password);
+      const payloadUser = response?.user || response?.User || null;
+      if (payloadUser) {
+        localStorage.setItem("auth_user", JSON.stringify(payloadUser));
+      }
+      if (response?.token) {
+        localStorage.setItem("auth_token", response.token);
+      }
+      navigate("/home");
     } catch (error) {
       setErrorMessage(error.message || "Đăng nhập thất bại");
     } finally {
