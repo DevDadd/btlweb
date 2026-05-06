@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SignupCard from "../components/SignupCard";
 import Background from "../components/Background.jsx";
-import LoginCard from "../components/LoginCard.jsx";
-import login from "../hooks/authentication_service.js";
+import signup from "../hooks/signup_service.js";
 
-export default function Login() {
+export default function Signup() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Login";
+    document.title = "Signup";
   }, []);
 
-  async function handleLogin({ username, password }) {
+  async function handleSignup({ username, password, email }) {
     setErrorMessage("");
     setIsSubmitting(true);
 
     try {
-      await login(username, password);
-      navigate("/");
+      await signup(username, password, email);
+      navigate("/login");
     } catch (error) {
-      setErrorMessage(error.message || "Đăng nhập thất bại");
+      setErrorMessage(error.message || "Đăng ký thất bại");
     } finally {
       setIsSubmitting(false);
     }
@@ -31,8 +31,8 @@ export default function Login() {
     <div className="relative min-h-screen">
       <Background />
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4">
-        <LoginCard
-          onSubmit={handleLogin}
+        <SignupCard
+          onSubmit={handleSignup}
           isSubmitting={isSubmitting}
           errorMessage={errorMessage}
         />

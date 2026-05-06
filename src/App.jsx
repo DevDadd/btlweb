@@ -4,6 +4,7 @@ import Exercises from './pages/Exercises.jsx';
 import DetailExercise from './pages/DetailExercise.jsx';
 import Profile from './pages/Profile.jsx';
 import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <Route path="/exercises/:exerciseId" element={<DetailExercise />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
     </Routes>
   );
 }

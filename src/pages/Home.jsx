@@ -29,9 +29,7 @@ export default function Home() {
           <button className="Homebutton2">Check My Form</button>
         </div>
         <div className="Sizedbox30" aria-hidden="true" />
-        <div className="exercises-grid">
-          <div className="exercise-card" />
-        </div>
+
       </div>
     </div>
   );
