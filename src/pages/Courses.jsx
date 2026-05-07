@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AppBar from "../components/AppBar.jsx";
 import Background from "../components/Background.jsx";
 import SearchBar from "../components/SearchBar.jsx";
@@ -18,6 +19,7 @@ const CATEGORIES = [
 ];
 
 export default function Courses() {
+    const navigate = useNavigate();
     const [courses, setCourses] = useState([]);
     const [status, setStatus] = useState("loading");
     const [errorMessage, setErrorMessage] = useState("");
@@ -65,6 +67,12 @@ export default function Courses() {
         });
     }, [courses, activeCategory, searchTerm]);
 
+    const handleCourseSelect = (course) => {
+        const courseId = course?.id ?? course?._id;
+        if (!courseId) return;
+        navigate(`/courses/${courseId}`, { state: { course } });
+    };
+
     return (
         <div className="page-fade">
             <Background gradientOnly />
@@ -92,6 +100,7 @@ export default function Courses() {
                     status={status}
                     courses={filtered}
                     errorMessage={errorMessage}
+                    onCourseSelect={handleCourseSelect}
                     emptyText="No courses found."
                     loadingText="Loading courses..."
                 />

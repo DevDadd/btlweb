@@ -4,6 +4,9 @@ import AppBar from '../components/AppBar.jsx';
 import Background from '../components/Background.jsx';
 import ExerciseDetailCardInfo from '../components/ExerciseDetailCardInfo.jsx';
 import getExercisesDetail from '../hooks/exercises_detail.js';
+import HowToPerform from '../components/StepCard.jsx';
+import MuscleAffected from '../components/MuscleAffected.jsx';
+import AnalyzeFormCard from '../components/AnalyzeFormCard.jsx';
 
 export default function DetailExercise() {
     const location = useLocation();
@@ -52,7 +55,7 @@ export default function DetailExercise() {
         <div className="page-fade">
             <Background gradientOnly />
             <AppBar />
-            <main style={{ maxWidth: 1400, margin: '120px auto 40px', padding: '0 20px' }}>
+            <main style={{ maxWidth: 1400, margin: '120px auto 40px', padding: '0 20px 48px' }}>
                 {status === 'loading' ? (
                     <div className="min-h-[220px] rounded-2xl border border-white/20 bg-white/[0.07] p-6 text-white shadow-2xl backdrop-blur-2xl flex items-center justify-center">
                         Loading exercise detail...
@@ -69,7 +72,13 @@ export default function DetailExercise() {
                         exerciseEquipment={exercise?.equipment?.name}
                         exerciseCaloriesPerMinute={exercise?.calories_per_minute}
                     />
+                    
                 )}
+                <HowToPerform guidelines={exercise?.guidelines} />
+                <MuscleAffected muscleGroup={exercise?.muscle_group} />
+                <div className="mt-6">
+                    <AnalyzeFormCard />
+                </div>
             </main>
         </div>
     );
