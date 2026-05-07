@@ -6,6 +6,7 @@ import SearchBar from '../components/SearchBar.jsx';
 import CategoryFilter from '../components/CategoryFilter.jsx';
 import ExercisesGrid from '../components/ExercisesGrid.jsx';
 import useExercises from '../hooks/useExercises.js';
+import { addExerciseHistory } from '../hooks/view_history.js';
 import '../styles/exerciselib.css';
 
 const CATEGORIES = [
@@ -44,38 +45,49 @@ export default function Exercises() {
     <div className="page-fade">
       <Background gradientOnly />
       <AppBar />
-      <div className="top-text-column exercise-hero">
-        <div className="Sizedbox30" aria-hidden="true" />
-        <div className="top-text top-text-mixed">
-          Exercises <span className="logo-highlight">Library</span>
+      <main
+        style={{
+          maxWidth: 1400,
+          margin: '120px auto 40px',
+          padding: '0 20px 48px',
+        }}
+      >
+        <div className="flex flex-col items-center">
+          <div className="Sizedbox30" aria-hidden="true" />
+          <div className="top-text top-text-mixed">
+            Exercises <span className="logo-highlight">Library</span>
+          </div>
+          <div className="Sizedbox" aria-hidden="true" />
+          <div className="subtitle">
+            Find the right exercise for every muscle group
+          </div>
+          <div className="Sizedbox" aria-hidden="true" />
+          <SearchBar
+            value={searchTerm}
+            onChange={setSearchTerm}
+            placeholder="Search exercises by name..."
+          />
+          <div className="Sizedbox" aria-hidden="true" />
+          <CategoryFilter
+            categories={CATEGORIES}
+            active={activeCategory}
+            onSelect={setActiveCategory}
+          />
         </div>
-        <div className="Sizedbox" aria-hidden="true" />
-        <div className="subtitle">
-          Find the right exercise for every muscle group
-        </div>
-        <div className="Sizedbox" aria-hidden="true" />
-        <SearchBar
-          value={searchTerm}
-          onChange={setSearchTerm}
-          placeholder="Search exercises by name..."
-        />
-        <div className="Sizedbox" aria-hidden="true" />
-        <CategoryFilter
-          categories={CATEGORIES}
-          active={activeCategory}
-          onSelect={setActiveCategory}
-        />
         <ExercisesGrid
           status={status}
           exercises={filtered}
           errorMessage={errorMessage}
           onExerciseSelect={(exercise) =>
-            navigate(`/exercises/${exercise.id}`, {
-              state: { exercise },
-            })
+            (() => {
+              addExerciseHistory(exercise);
+              navigate(`/exercises/${exercise.id}`, {
+                state: { exercise },
+              });
+            })()
           }
         />
-      </div>
+      </main>
     </div>
   );
 }

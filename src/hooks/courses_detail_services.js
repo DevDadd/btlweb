@@ -7,14 +7,14 @@ export default async function getCoursesDetail(courseId) {
 
     if (!contentType.includes("application/json")) {
         throw new Error(
-            "API courses detail không trả JSON. Kiểm tra lại endpoint /api/courses/:id/ hoặc backend.",
+            "Courses detail API did not return JSON. Check /api/courses/:id/ or backend.",
         );
     }
 
     const data = JSON.parse(raw);
 
     if (!response.ok) {
-        throw new Error(data?.message || "Lấy chi tiết courses thất bại");
+        throw new Error(data?.message || "Failed to fetch course details");
     }
 
     return data;

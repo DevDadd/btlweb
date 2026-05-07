@@ -1,15 +1,6 @@
 const SIGNUP_URLS = [
   "https://django2-yak8.onrender.com/api/signup/",
 ];
-
-/**
- * Gọi API signup bằng POST và gửi JSON body.
- *
- * @param {string} username
- * @param {string} password
- * @param {string} email
- * @returns {Promise<any>} Dữ liệu JSON trả về từ server.
- */
 export default async function signup(username, password, email) {
   let lastResponse = null;
 
@@ -28,9 +19,6 @@ export default async function signup(username, password, email) {
 
     const raw = await response.text();
     const contentType = response.headers.get("content-type") || "";
-
-    // Django often redirects /api/signup <-> /api/signup/
-    // If redirected to an HTML page, try the next candidate URL.
     if (!contentType.includes("application/json")) {
       lastResponse = response;
       continue;
@@ -38,12 +26,12 @@ export default async function signup(username, password, email) {
 
     const data = JSON.parse(raw);
     if (!response.ok) {
-      throw new Error(data?.message || "Đăng ký thất bại");
+      throw new Error(data?.message || "Signup failed");
     }
     return data;
   }
 
   throw new Error(
-    `API signup không trả JSON (status ${lastResponse?.status ?? "?"}). Kiểm tra URL backend: /api/signup hoặc /api/signup/.`,
+    `Signup API did not return JSON (status ${lastResponse?.status ?? "?"}). Check backend URL: /api/signup or /api/signup/.`,
   );
 }

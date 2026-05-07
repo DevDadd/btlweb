@@ -21,7 +21,7 @@ export default function Signup() {
       await signup(username, password, email);
       navigate("/login");
     } catch (error) {
-      setErrorMessage(error.message || "Đăng ký thất bại");
+      setErrorMessage(error.message || "Signup failed");
     } finally {
       setIsSubmitting(false);
     }

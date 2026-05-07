@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '../components/AppBar.jsx';
 import Background from '../components/Background.jsx';
+import { getCourseHistory, getExerciseHistory } from '../hooks/view_history.js';
 import '../styles/profile.css';
 
 const SUMMARY_CARDS = [
@@ -11,7 +13,10 @@ const SUMMARY_CARDS = [
 ];
 
 export default function Profile() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
+  const [courseHistory, setCourseHistory] = useState([]);
+  const [exerciseHistory, setExerciseHistory] = useState([]);
 
   useEffect(() => {
     function readUser() {
@@ -20,6 +25,9 @@ export default function Profile() {
       } catch {
         setUser({});
       }
+
+      setCourseHistory(getCourseHistory());
+      setExerciseHistory(getExerciseHistory());
     }
 
     readUser();
@@ -79,6 +87,54 @@ export default function Profile() {
               </div>
             </div>
           ))}
+        </div>
+        <div className="history-section">
+          <div className="history-column">
+            <div className="history-title">
+              <i className="fas fa-book-open history-title-icon" />
+              <span>Viewed Course History</span>
+            </div>
+            <div className="history-list">
+              {courseHistory.length === 0 ? (
+                <div className="history-empty">You have not opened any courses yet.</div>
+              ) : (
+                courseHistory.map((course) => (
+                  <button
+                    type="button"
+                    className="history-card"
+                    key={`course-${course.id}`}
+                    onClick={() => navigate(`/courses/${course.id}`)}
+                  >
+                    <div className="history-name">{course.name}</div>
+                    <div className="history-meta">{course.category}</div>
+                  </button>
+                ))
+              )}
+            </div>
+          </div>
+          <div className="history-column">
+            <div className="history-title">
+              <i className="fas fa-dumbbell history-title-icon" />
+              <span>Viewed Exercise History</span>
+            </div>
+            <div className="history-list">
+              {exerciseHistory.length === 0 ? (
+                <div className="history-empty">You have not opened any exercises yet.</div>
+              ) : (
+                exerciseHistory.map((exercise) => (
+                  <button
+                    type="button"
+                    className="history-card"
+                    key={`exercise-${exercise.id}`}
+                    onClick={() => navigate(`/exercises/${exercise.id}`)}
+                  >
+                    <div className="history-name">{exercise.name}</div>
+                    <div className="history-meta">{exercise.category}</div>
+                  </button>
+                ))
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

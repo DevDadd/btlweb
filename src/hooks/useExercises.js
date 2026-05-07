@@ -1,17 +1,6 @@
 import { useEffect, useState } from 'react';
 
 const DEFAULT_API_URL = 'https://django2-yak8.onrender.com/api/exercises';
-
-/**
- * Fetch danh sách bài tập từ API.
- *
- * @param {string} [apiUrl] - Endpoint trả về `{ success, data }`.
- * @returns {{
- *   exercises: Array,
- *   status: 'loading' | 'ready' | 'error',
- *   errorMessage: string,
- * }}
- */
 export default function useExercises(apiUrl = DEFAULT_API_URL) {
   const [exercises, setExercises] = useState([]);
   const [status, setStatus] = useState('loading');

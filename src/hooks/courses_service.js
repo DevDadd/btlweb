@@ -1,10 +1,4 @@
 const COURSES_URL = "https://django2-yak8.onrender.com/api/courses";
-
-/**
- * Gọi API lấy danh sách courses bằng phương thức GET.
- *
- * @returns {Promise<any>} Dữ liệu JSON trả về từ server.
- */
 export default async function getCourses() {
     const response = await fetch(COURSES_URL);
     const raw = await response.text();
@@ -12,14 +6,14 @@ export default async function getCourses() {
 
     if (!contentType.includes("application/json")) {
         throw new Error(
-            "API courses không trả JSON. Kiểm tra lại endpoint /api/courses hoặc backend.",
+            "Courses API did not return JSON. Check /api/courses or backend.",
         );
     }
 
     const data = JSON.parse(raw);
 
     if (!response.ok) {
-        throw new Error(data?.message || "Lấy danh sách courses thất bại");
+        throw new Error(data?.message || "Failed to fetch courses");
     }
 
     return data;

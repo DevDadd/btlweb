@@ -1,4 +1,4 @@
-export default function AnalyzeFormCard() {
+export default function AnalyzeFormCard({ onUploadVideo }) {
   return (
     <div className="w-full rounded-2xl border border-red-400/30 bg-gradient-to-br from-red-500 via-red-600 to-red-800 px-6 py-8 shadow-[0_0_40px_rgba(239,68,68,0.35)]">
       <div className="flex flex-col items-center justify-center text-center">
@@ -10,7 +10,11 @@ export default function AnalyzeFormCard() {
           Upload a video and get AI-powered feedback on your technique.
         </p>
 
-        <button className="mt-6 rounded-full bg-gray-500 px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-gray-400">
+        <button
+          type="button"
+          onClick={onUploadVideo}
+          className="mt-6 rounded-full bg-gray-500 px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:bg-gray-400"
+        >
           Analyze My Form
         </button>
       </div>

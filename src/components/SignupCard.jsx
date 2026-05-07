@@ -17,7 +17,6 @@ export default function SignupCard({ onSubmit, isSubmitting, errorMessage }) {
             onSubmit={handleSubmit}
             className="w-full max-w-md rounded-3xl border border-white/20 bg-white/[0.07] p-8 shadow-2xl backdrop-blur-2xl"
         >
-            {/* Title */}
             <h1 className="mb-2 text-center text-3xl font-bold text-white">
                 Welcome back
             </h1>
@@ -25,7 +24,6 @@ export default function SignupCard({ onSubmit, isSubmitting, errorMessage }) {
                 Sign up to continue your training journey
             </p>
 
-            {/* Username */}
             <div className="mb-4">
                 <label className="mb-2 block text-sm font-medium text-white/90">
                     Username
@@ -62,7 +60,6 @@ export default function SignupCard({ onSubmit, isSubmitting, errorMessage }) {
                 </div>
             </div>
 
-            {/* Password */}
             <div className="mb-4">
                 <label className="mb-2 block text-sm font-medium text-white/90">
                     Password
@@ -100,7 +97,6 @@ export default function SignupCard({ onSubmit, isSubmitting, errorMessage }) {
             ) : null}
 
 
-            {/* Button */}
             <button
                 type="submit"
                 disabled={isSubmitting}
@@ -109,14 +105,12 @@ export default function SignupCard({ onSubmit, isSubmitting, errorMessage }) {
                 {isSubmitting ? "Signing up..." : "Sign up →"}
             </button>
 
-            {/* Divider */}
             <div className="my-6 flex items-center">
                 <div className="h-px flex-1 bg-white/20" />
                 <span className="mx-3 text-sm text-white/50">OR</span>
                 <div className="h-px flex-1 bg-white/20" />
             </div>
 
-            {/* Social */}
             <div className="mb-6 flex gap-3">
                 <button
                     type="button"
@@ -134,7 +128,6 @@ export default function SignupCard({ onSubmit, isSubmitting, errorMessage }) {
                 </button>
             </div>
 
-            {/* Signup */}
             <p className="text-center text-sm text-white/70">
                 {"Already have an account? "}
                 <Link to="/login" className="cursor-pointer font-medium text-red-500">Login</Link>

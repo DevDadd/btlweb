@@ -6,6 +6,7 @@ import SearchBar from "../components/SearchBar.jsx";
 import CategoryFilter from "../components/CategoryFilter.jsx";
 import CoursesGrid from "../components/CoursesGrid.jsx";
 import getCourses from "../hooks/courses_service.js";
+import { addCourseHistory } from "../hooks/view_history.js";
 import "../styles/exerciselib.css";
 
 const CATEGORIES = [
@@ -42,7 +43,7 @@ export default function Courses() {
                 setStatus("ready");
             } catch (error) {
                 if (cancelled) return;
-                setErrorMessage(error.message || "Lấy danh sách courses thất bại");
+                setErrorMessage(error.message || "Failed to fetch courses");
                 setStatus("error");
             }
         }
@@ -70,6 +71,7 @@ export default function Courses() {
     const handleCourseSelect = (course) => {
         const courseId = course?.id ?? course?._id;
         if (!courseId) return;
+        addCourseHistory(course);
         navigate(`/courses/${courseId}`, { state: { course } });
     };
 
@@ -77,25 +79,33 @@ export default function Courses() {
         <div className="page-fade">
             <Background gradientOnly />
             <AppBar />
-            <div className="top-text-column exercise-hero">
-                <div className="Sizedbox30" aria-hidden="true" />
-                <div className="top-text top-text-mixed">
-                    Courses <span className="logo-highlight">Library</span>
+            <main
+                style={{
+                    maxWidth: 1400,
+                    margin: "120px auto 40px",
+                    padding: "0 20px 48px",
+                }}
+            >
+                <div className="flex flex-col items-center">
+                    <div className="Sizedbox30" aria-hidden="true" />
+                    <div className="top-text top-text-mixed">
+                        Courses <span className="logo-highlight">Library</span>
+                    </div>
+                    <div className="Sizedbox" aria-hidden="true" />
+                    <div className="subtitle">Find the right course for you.</div>
+                    <div className="Sizedbox" aria-hidden="true" />
+                    <SearchBar
+                        value={searchTerm}
+                        onChange={setSearchTerm}
+                        placeholder="Search courses by name..."
+                    />
+                    <div className="Sizedbox" aria-hidden="true" />
+                    <CategoryFilter
+                        categories={CATEGORIES}
+                        active={activeCategory}
+                        onSelect={setActiveCategory}
+                    />
                 </div>
-                <div className="Sizedbox" aria-hidden="true" />
-                <div className="subtitle">Find the right course for you.</div>
-                <div className="Sizedbox" aria-hidden="true" />
-                <SearchBar
-                    value={searchTerm}
-                    onChange={setSearchTerm}
-                    placeholder="Search courses by name..."
-                />
-                <div className="Sizedbox" aria-hidden="true" />
-                <CategoryFilter
-                    categories={CATEGORIES}
-                    active={activeCategory}
-                    onSelect={setActiveCategory}
-                />
                 <CoursesGrid
                     status={status}
                     courses={filtered}
@@ -104,7 +114,7 @@ export default function Courses() {
                     emptyText="No courses found."
                     loadingText="Loading courses..."
                 />
-            </div>
+            </main>
         </div>
     );
 }

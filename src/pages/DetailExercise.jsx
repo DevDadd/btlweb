@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import AppBar from '../components/AppBar.jsx';
 import Background from '../components/Background.jsx';
 import ExerciseDetailCardInfo from '../components/ExerciseDetailCardInfo.jsx';
@@ -10,6 +10,7 @@ import AnalyzeFormCard from '../components/AnalyzeFormCard.jsx';
 
 export default function DetailExercise() {
     const location = useLocation();
+    const navigate = useNavigate();
     const { exerciseId } = useParams();
     const exerciseFromState = location.state?.exercise;
     const [exercise, setExercise] = useState(exerciseFromState || null);
@@ -29,12 +30,11 @@ export default function DetailExercise() {
                 setStatus('ready');
             } catch (error) {
                 if (cancelled) return;
-                // Keep state data visible if we already have something from navigation state.
                 if (exerciseFromState) {
                     setStatus('ready');
                     return;
                 }
-                setErrorMessage(error.message || 'Lấy chi tiết bài tập thất bại');
+                setErrorMessage(error.message || 'Failed to fetch exercise details');
                 setStatus('error');
             }
         }
@@ -72,12 +72,12 @@ export default function DetailExercise() {
                         exerciseEquipment={exercise?.equipment?.name}
                         exerciseCaloriesPerMinute={exercise?.calories_per_minute}
                     />
-                    
+
                 )}
                 <HowToPerform guidelines={exercise?.guidelines} />
                 <MuscleAffected muscleGroup={exercise?.muscle_group} />
                 <div className="mt-6">
-                    <AnalyzeFormCard />
+                    <AnalyzeFormCard onUploadVideo={() => navigate('/upload-video')} />
                 </div>
             </main>
         </div>

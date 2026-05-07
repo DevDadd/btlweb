@@ -1,12 +1,4 @@
 const API_URL = "https://django2-yak8.onrender.com/api/login/";
-
-/**
- * Gọi API login bằng POST và gửi JSON body.
- *
- * @param {string} username
- * @param {string} password
- * @returns {Promise<any>} Dữ liệu JSON trả về từ server.
- */
 export default async function login(username, password) {
     const response = await fetch(API_URL, {
         method: "POST",
@@ -27,12 +19,12 @@ export default async function login(username, password) {
         data = JSON.parse(raw);
     } else {
         throw new Error(
-            "API login không trả JSON. Kiểm tra lại endpoint /api/login hoặc backend.",
+            "Login API did not return JSON. Check /api/login or backend.",
         );
     }
 
     if (!response.ok) {
-        throw new Error(data?.message || "Đăng nhập thất bại");
+        throw new Error(data?.message || "Login failed");
     }
 
     return data;

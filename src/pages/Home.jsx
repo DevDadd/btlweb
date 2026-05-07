@@ -26,7 +26,9 @@ export default function Home() {
             <button className="Homebutton">Browse Exercises</button>
           </Link>
           <div className="width-sizedbox30" />
-          <button className="Homebutton2">Check My Form</button>
+          <Link to="/upload-video">
+            <button className="Homebutton2">Check My Form</button>
+          </Link>
         </div>
         <div className="Sizedbox30" aria-hidden="true" />
 

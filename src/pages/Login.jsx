@@ -28,7 +28,7 @@ export default function Login() {
       }
       navigate("/home");
     } catch (error) {
-      setErrorMessage(error.message || "Đăng nhập thất bại");
+      setErrorMessage(error.message || "Login failed");
     } finally {
       setIsSubmitting(false);
     }
