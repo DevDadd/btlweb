@@ -5,7 +5,7 @@ import { GoogleGenAI } from '@google/genai';
 import AppBar from '../components/AppBar.jsx';
 import Background from '../components/Background.jsx';
 
-const CHAT_API_KEY = 'AIzaSyALF8ZgQtpW8Dl0mRBbVRkGCrb2MlLx_ZU';
+const CHAT_API_KEY = 'secret';
 const ai = new GoogleGenAI({ apiKey: CHAT_API_KEY });
 
 
