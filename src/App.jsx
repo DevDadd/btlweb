@@ -1,13 +1,13 @@
 import { Route, Routes } from 'react-router-dom';
-import Home from './pages/Home.jsx';
-import Exercises from './pages/Exercises.jsx';
-import DetailExercise from './pages/DetailExercise.jsx';
-import DetailCourses from './pages/DetailCourses.jsx';
-import Profile from './pages/Profile.jsx';
-import Login from './pages/Login.jsx';
-import Signup from './pages/Signup.jsx';
-import Courses from './pages/Courses.jsx';
-import UploadVideo from './pages/UploadVideo.jsx';
+import Home from './pages/home/Home.jsx';
+import Exercises from './pages/library/Exercises.jsx';
+import DetailExercise from './pages/detail/DetailExercise.jsx';
+import DetailCourses from './pages/detail/DetailCourses.jsx';
+import Profile from './pages/profile/Profile.jsx';
+import Login from './pages/auth/Login.jsx';
+import Signup from './pages/auth/Signup.jsx';
+import Courses from './pages/library/Courses.jsx';
+import UploadVideo from './pages/upload/UploadVideo.jsx';
 
 export default function App() {
   return (

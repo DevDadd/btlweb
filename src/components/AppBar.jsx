@@ -13,7 +13,7 @@ export default function AppBar() {
         <NavLink to="/exercises">Exercises</NavLink>
         <NavLink to="/courses">Courses</NavLink>
         <NavLink to="/profile">Profile</NavLink>
-        <NavLink to="/login">Login</NavLink>
+        <NavLink to="/login">Logout</NavLink>
       </nav>
     </header>
   );
