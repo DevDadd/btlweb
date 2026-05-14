@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import AppBar from "../../components/AppBar";
 import Background from "../../components/Background";
 import VideoUploadCard from "../../components/VideoUploadCard";
@@ -20,14 +20,72 @@ export default function UploadVideo() {
     const [selectedExercise, setSelectedExercise] = useState("");
     const [jobId, setJobId] = useState(null);
     const [analysisStatus, setAnalysisStatus] = useState("");
+    const [analysisProgress, setAnalysisProgress] = useState(0);
+    const [resultUrl, setResultUrl] = useState("");
+    const [isProcessing, setIsProcessing] = useState(false);
     const videoFileRef = useRef(null);
 
     const { uploadVideo, uploading, uploadError, uploadedUrl, progress, reset } =
         useUploadVideo();
 
+    useEffect(() => {
+        let intervalId;
+
+        const checkStatus = async () => {
+            if (!jobId) return;
+
+            try {
+                const response = await fetch(`https://django2-yak8.onrender.com/api/analysis/${jobId}/status/`);
+                const data = await response.json();
+
+                if (data.success) {
+                    if (data.status === "processing") {
+                        setAnalysisStatus("AI is analyzing your video...");
+                        if (data.progress !== undefined && data.progress !== null) {
+                            setAnalysisProgress(data.progress);
+                        } else {
+                            // Simulate progress asymptotically approaching 95% if backend doesn't provide progress
+                            setAnalysisProgress(prev => {
+                                const newProgress = prev + (95 - prev) * 0.15;
+                                return newProgress > 95 ? 95 : newProgress;
+                            });
+                        }
+                    } else if (data.result_url || data.status === "completed") {
+                        setAnalysisStatus("Analysis completed successfully!");
+                        setAnalysisProgress(100);
+                        setResultUrl(data.result_url);
+                        setIsProcessing(false);
+                        clearInterval(intervalId);
+                    } else if (data.status === "failed") {
+                        setAnalysisStatus("Analysis failed. Please try again.");
+                        setAnalysisProgress(0);
+                        setIsProcessing(false);
+                        clearInterval(intervalId);
+                    }
+                }
+            } catch (err) {
+                console.error("Error checking status:", err);
+            }
+        };
+
+        if (jobId && isProcessing) {
+            intervalId = setInterval(checkStatus, 3000);
+            checkStatus(); // Run immediately
+        }
+
+        return () => {
+            if (intervalId) clearInterval(intervalId);
+        };
+    }, [jobId, isProcessing]);
+
     const handleVideoSelected = (previewUrl, file) => {
         setUploadedVideoUrl(previewUrl);
         videoFileRef.current = file;
+        setResultUrl("");
+        setJobId(null);
+        setAnalysisStatus("");
+        setAnalysisProgress(0);
+        setIsProcessing(false);
     };
 
     const handleStartAnalysis = async () => {
@@ -39,10 +97,15 @@ export default function UploadVideo() {
         }
 
         setAnalysisStatus("");
+        setAnalysisProgress(0);
+        setResultUrl("");
+        setIsProcessing(true);
+
         const url = await uploadVideo(videoFileRef.current);
         if (url) {
             console.log("Video uploaded to R2:", url);
             setAnalysisStatus("Sending request to AI server...");
+            setAnalysisProgress(5); // Initial progress after upload
 
             try {
                 const response = await fetch("https://django2-yak8.onrender.com/api/analysis/upload/", {
@@ -63,20 +126,27 @@ export default function UploadVideo() {
                 if (response.ok && data.success) {
                     console.log("job_id from API:", data.job_id);
                     setJobId(data.job_id);
-                    setAnalysisStatus(`Analysis started successfully!`);
+                    setAnalysisStatus(`Analysis started successfully! Waiting for results...`);
+                    setAnalysisProgress(10); // Ready to start polling
                 } else {
                     setAnalysisStatus(`Failed to start analysis: ${data.message || 'Unknown error'}`);
+                    setIsProcessing(false);
                 }
             } catch (err) {
                 console.error("API Error:", err);
                 setAnalysisStatus("Failed to contact AI server. Please try again.");
+                setIsProcessing(false);
             }
+        } else {
+            setIsProcessing(false);
         }
     };
 
     const getButtonText = () => {
         if (uploading) return `Uploading... ${progress}%`;
-        if (uploadedUrl) return "✓ Uploaded — Start AI analysis";
+        if (isProcessing && jobId) return `Analyzing... ${Math.round(analysisProgress)}%`;
+        if (uploadedUrl && !resultUrl) return "✓ Uploaded — Start AI analysis";
+        if (resultUrl) return "Re-analyze video";
         return "Start AI analysis";
     };
 
@@ -131,7 +201,7 @@ export default function UploadVideo() {
                     <div className="Sizedbox" aria-hidden="true" />
                     <div className="flex w-full max-w-6xl flex-col items-center gap-6 lg:flex-row lg:items-stretch lg:justify-center">
                         <VideoUploadCard onVideoSelected={handleVideoSelected} />
-                        <AIResultVideoCard />
+                        <AIResultVideoCard videoUrl={resultUrl} isProcessing={isProcessing || uploading} />
                     </div>
 
                     {/* Upload progress bar */}
@@ -156,24 +226,30 @@ export default function UploadVideo() {
                         </div>
                     )}
 
-                    {/* Upload success */}
-                    {uploadedUrl && !uploading && !analysisStatus && (
-                        <div className="mt-4 w-full max-w-xl rounded-xl border border-green-500/30 bg-green-500/10 p-3 text-center text-sm text-green-300">
-                            ✓ Video uploaded successfully
-                        </div>
-                    )}
-
-                    {/* Analysis Status */}
+                    {/* Analysis Status with Progress Bar */}
                     {analysisStatus && (
-                        <div className="mt-4 w-full max-w-xl rounded-xl border border-blue-500/30 bg-blue-500/10 p-3 text-center text-sm text-blue-300">
-                            {analysisStatus}
+                        <div className="mt-4 w-full max-w-xl rounded-xl border border-blue-500/30 bg-blue-500/10 p-4 text-center text-sm text-blue-200">
+                            <p className="font-semibold">{analysisStatus}</p>
+                            {isProcessing && jobId && (
+                                <div className="mt-3 w-full">
+                                    <div className="h-2 w-full overflow-hidden rounded-full bg-blue-900/30">
+                                        <div
+                                            className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-500 ease-out"
+                                            style={{ width: `${Math.round(analysisProgress)}%` }}
+                                        />
+                                    </div>
+                                    <p className="mt-1 text-xs text-blue-300/80">
+                                        {Math.round(analysisProgress)}%
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     )}
 
                     <div className="mt-6 flex w-full justify-center">
                         <button
                             type="button"
-                            disabled={!uploadedVideoUrl || uploading}
+                            disabled={!uploadedVideoUrl || uploading || (isProcessing && jobId)}
                             onClick={handleStartAnalysis}
                             className="rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 px-8 py-3 text-sm font-bold text-white shadow-[0_8px_24px_rgba(239,68,68,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:from-red-400 hover:via-red-500 hover:to-red-600 hover:shadow-[0_12px_30px_rgba(239,68,68,0.45)] disabled:cursor-not-allowed disabled:bg-none disabled:bg-gray-600 disabled:text-gray-300 disabled:shadow-none disabled:hover:translate-y-0"
                         >

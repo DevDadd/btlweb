@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Exercises from './pages/Exercises.jsx';
 import DetailExercise from './pages/DetailExercise.jsx';
@@ -14,7 +14,7 @@ import BMICalculator from './pages/BMICalculator.jsx';
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/home" element={<Home />} />
       <Route path="/exercises" element={<Exercises />} />
       <Route path="/exercises/:exerciseId" element={<DetailExercise />} />
