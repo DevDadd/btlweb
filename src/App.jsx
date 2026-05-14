@@ -9,6 +9,7 @@ import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import Courses from './pages/Courses.jsx';
 import UploadVideo from './pages/UploadVideo.jsx';
+import BMICalculator from './pages/BMICalculator.jsx';
 
 export default function App() {
   return (
@@ -24,6 +25,8 @@ export default function App() {
       <Route path="/body-stats" element={<BodyStats />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/bmi" element={<BMICalculator />} />
+      <Route path="/calculator" element={<BMICalculator />} />
     </Routes>
   );
 }

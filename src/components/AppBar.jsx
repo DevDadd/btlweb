@@ -36,6 +36,7 @@ export default function AppBar() {
         </NavLink>
         <NavLink to="/exercises">Exercises</NavLink>
         <NavLink to="/courses">Courses</NavLink>
+        <NavLink to="/bmi">BMI Calc</NavLink>
         {isAuthenticated && <NavLink to="/profile">Profile</NavLink>}
         {isAuthenticated ? (
           <button

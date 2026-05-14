@@ -1,7 +1,7 @@
 import React from "react";
 
 const ExerciseListCard = ({
-  icon = "💪",
+  icon = <i className="fas fa-fire"></i>,
   title = "Unnamed exercise",
   category = "General",
   description = "No description available.",
@@ -12,7 +12,7 @@ const ExerciseListCard = ({
 
   return (
     <div
-      className={`group flex w-full items-center justify-between rounded-2xl border border-white/20 bg-white/[0.07] p-5 font-sans text-white shadow-2xl backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-red-300/50 hover:bg-white/[0.12] hover:shadow-red-900/30 ${
+      className={`group relative overflow-hidden flex w-full flex-col md:flex-row md:items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-5 font-sans text-white shadow-lg backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-orange-500/40 hover:bg-white/[0.06] hover:shadow-[0_8px_20px_rgba(239,68,68,0.15)] animate-fade-in ${
         isClickable ? "cursor-pointer" : ""
       }`}
       onClick={onClick}
@@ -26,46 +26,35 @@ const ExerciseListCard = ({
       role={isClickable ? "button" : undefined}
       tabIndex={isClickable ? 0 : undefined}
     >
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-orange-400 to-red-600 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"></div>
+
       <div className="flex items-center gap-4">
-        <span className="text-3xl transition-transform duration-300 group-hover:scale-110">
+        <div className="flex w-12 h-12 shrink-0 items-center justify-center rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xl transition-transform duration-300 group-hover:scale-105 group-hover:bg-red-500/20 shadow-[0_0_10px_rgba(239,68,68,0.1)] group-hover:shadow-[0_0_15px_rgba(239,68,68,0.2)]">
           {icon}
-        </span>
+        </div>
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center gap-3">
-            <h2 className="text-[1.35rem] font-bold leading-none m-0">{title}</h2>
-            <span className="px-3 py-1 text-xs font-semibold text-gray-200 bg-transparent border border-gray-500 rounded-full leading-none transition-colors duration-300 group-hover:border-red-300/60 group-hover:text-red-100">
+            <h2 className="text-xl font-bold leading-none m-0 text-gray-100 group-hover:text-white transition-colors">{title}</h2>
+            <span className="px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-500/10 border border-orange-500/20 rounded-md transition-colors duration-300 group-hover:bg-orange-500/20">
               {category}
             </span>
           </div>
-          <p className="text-[15px] text-gray-400 m-0 transition-colors duration-300 group-hover:text-gray-300">
+          <p className="text-sm text-gray-400 m-0 transition-colors duration-300 group-hover:text-gray-300 max-w-xl line-clamp-1">
             {description}
           </p>
         </div>
       </div>
 
-      <div className="flex items-center gap-8">
-        <div className="flex flex-col items-end gap-1">
-          <span className="text-lg font-bold leading-none">{volume}</span>
-          <span className="text-[11px] font-bold tracking-widest text-gray-400">
-            VOLUME
+      <div className="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto mt-2 md:mt-0 pl-16 md:pl-0 border-t border-white/5 md:border-none pt-3 md:pt-0">
+        <div className="flex flex-col md:items-end gap-1">
+          <span className="text-lg font-bold leading-none text-white">{volume}</span>
+          <span className="text-xs font-bold tracking-widest text-gray-500 uppercase mt-1">
+            Volume
           </span>
         </div>
 
-        <div className="text-gray-500 transition-all duration-300 group-hover:text-red-200 group-hover:scale-110">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="m9 12 2 2 4-4"></path>
-          </svg>
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.05] text-gray-500 transition-all duration-300 group-hover:bg-white/[0.1] group-hover:text-white group-hover:translate-x-1">
+          <i className="fas fa-chevron-right text-sm"></i>
         </div>
       </div>
     </div>
