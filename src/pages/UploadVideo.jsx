@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import { useState, useRef } from "react";
 import AppBar from "../components/AppBar";
 import Background from "../components/Background";
@@ -187,6 +187,4 @@ export default function UploadVideo() {
         </>
     );
 }
-=======
-export { default } from "./upload/UploadVideo.jsx";
->>>>>>> 18cd81db58f99492016c5fc38981480f505c3328
+
