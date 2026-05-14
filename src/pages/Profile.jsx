@@ -19,6 +19,13 @@ export default function Profile() {
   const [exerciseHistory, setExerciseHistory] = useState([]);
 
   useEffect(() => {
+    const token = localStorage.getItem('auth_token');
+    if (!token) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     function readUser() {
       try {
         setUser(JSON.parse(localStorage.getItem('auth_user') || '{}'));
@@ -57,14 +64,21 @@ export default function Profile() {
                 <img src="/assets/avatar.jpg" alt="Profile Avatar" />
               </div>
             </div>
-            <button className="camera-btn" type="button" aria-label="Change avatar">
-              📷
-            </button>
           </div>
 
           <div className="column">
             <div className="profile-info">
+              <div className="profile-header">
               <div className="profile-name">{profileName}</div>
+              <button
+                className="body-stats-btn"
+                onClick={() => navigate('/body-stats')}
+                type="button"
+                aria-label="View body statistics"
+              >
+                Body Stats
+              </button>
+              </div>
               <div className="profile-row">
                 <i className="fas fa-user" />
                 <div className="email-info">@{username}</div>
