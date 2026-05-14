@@ -5,6 +5,8 @@ import VideoUploadCard from "../../components/VideoUploadCard";
 import AIResultVideoCard from "../../components/AIResultVideoCard";
 import useUploadVideo from "../../hooks/useUploadVideo";
 
+const STORAGE_KEY = "upload_video_analysis_state";
+
 const EXERCISE_OPTIONS = [
     "squat",
     "deadlift",
@@ -27,6 +29,40 @@ export default function UploadVideo() {
 
     const { uploadVideo, uploading, uploadError, uploadedUrl, progress, reset } =
         useUploadVideo();
+
+    const clearSavedAnalysisState = () => {
+        localStorage.removeItem(STORAGE_KEY);
+    };
+
+    useEffect(() => {
+        try {
+            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+            if (saved.uploadedVideoUrl) setUploadedVideoUrl(saved.uploadedVideoUrl);
+            if (saved.selectedExercise) setSelectedExercise(saved.selectedExercise);
+            if (saved.jobId) setJobId(saved.jobId);
+            if (saved.analysisStatus) setAnalysisStatus(saved.analysisStatus);
+            if (typeof saved.analysisProgress === "number") setAnalysisProgress(saved.analysisProgress);
+            if (saved.resultUrl) setResultUrl(saved.resultUrl);
+            if (typeof saved.isProcessing === "boolean") setIsProcessing(saved.isProcessing);
+        } catch (err) {
+            console.error("Failed to restore upload state:", err);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify({
+                uploadedVideoUrl,
+                selectedExercise,
+                jobId,
+                analysisStatus,
+                analysisProgress,
+                resultUrl,
+                isProcessing,
+            })
+        );
+    }, [uploadedVideoUrl, selectedExercise, jobId, analysisStatus, analysisProgress, resultUrl, isProcessing]);
 
     useEffect(() => {
         let intervalId;
@@ -55,6 +91,7 @@ export default function UploadVideo() {
                         setAnalysisProgress(100);
                         setResultUrl(data.result_url);
                         setIsProcessing(false);
+                        clearSavedAnalysisState();
                         clearInterval(intervalId);
                     } else if (data.status === "failed") {
                         setAnalysisStatus("Analysis failed. Please try again.");
@@ -86,6 +123,7 @@ export default function UploadVideo() {
         setAnalysisStatus("");
         setAnalysisProgress(0);
         setIsProcessing(false);
+        clearSavedAnalysisState();
     };
 
     const handleStartAnalysis = async () => {
@@ -124,10 +162,26 @@ export default function UploadVideo() {
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    console.log("job_id from API:", data.job_id);
-                    setJobId(data.job_id);
-                    setAnalysisStatus(`Analysis started successfully! Waiting for results...`);
-                    setAnalysisProgress(10); // Ready to start polling
+                    // If backend returned a job_id, use it and start polling
+                    if (data.job_id) {
+                        console.log("job_id from API:", data.job_id);
+                        setJobId(data.job_id);
+                        setAnalysisStatus(`Analysis started successfully! Waiting for results...`);
+                        setAnalysisProgress(10); // Ready to start polling
+                    } else if (data.result_url) {
+                        // Backend returned final result immediately (no async job)
+                        console.log("result_url from API:", data.result_url);
+                        setResultUrl(data.result_url);
+                        setAnalysisStatus("Analysis completed successfully!");
+                        setAnalysisProgress(100);
+                        setJobId(null);
+                        setIsProcessing(false);
+                        clearSavedAnalysisState();
+                    } else {
+                        // Success but neither job_id nor result_url — treat as unknown
+                        setAnalysisStatus(`Analysis started (no job id returned).`);
+                        setAnalysisProgress(10);
+                    }
                 } else {
                     setAnalysisStatus(`Failed to start analysis: ${data.message || 'Unknown error'}`);
                     setIsProcessing(false);

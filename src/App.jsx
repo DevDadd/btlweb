@@ -8,7 +8,7 @@ import BodyStats from './pages/BodyStats.jsx';
 import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import Courses from './pages/Courses.jsx';
-import UploadVideo from './pages/UploadVideo.jsx';
+import UploadVideo from './pages/upload/UploadVideo.jsx';
 import BMICalculator from './pages/BMICalculator.jsx';
 
 export default function App() {

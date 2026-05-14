@@ -6,10 +6,15 @@ const AIResultVideoCard = ({ videoUrl = "", isProcessing = true }) => {
       <div className="relative flex h-[240px] w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-red-400/40 bg-white/[0.03] p-4 sm:h-[280px] lg:h-[330px]">
         {videoUrl ? (
           <video
+            width="720"
             controls
+            autoPlay
+             muted
+             crossOrigin="anonymous"
             className="h-full w-full rounded-lg object-contain"
-            src={videoUrl}
-          />
+          >
+            <source src={videoUrl} type="video/mp4" crossOrigin="anonymous" />
+          </video>
         ) : (
           <>
             <svg
