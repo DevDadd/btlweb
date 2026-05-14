@@ -51,8 +51,4 @@ app.post("/upload-video", upload.single("video"), async (req, res) => {
 
 app.listen(3000, () => {
     console.log("Server running");
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 18cd81db58f99492016c5fc38981480f505c3328
