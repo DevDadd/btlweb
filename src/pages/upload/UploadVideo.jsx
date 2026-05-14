@@ -1,10 +1,9 @@
-<<<<<<< HEAD
 import { useState, useRef } from "react";
-import AppBar from "../components/AppBar";
-import Background from "../components/Background";
-import VideoUploadCard from "../components/VideoUploadCard";
-import AIResultVideoCard from "../components/AIResultVideoCard";
-import useUploadVideo from "../hooks/useUploadVideo.js";
+import AppBar from "../../components/AppBar";
+import Background from "../../components/Background";
+import VideoUploadCard from "../../components/VideoUploadCard";
+import AIResultVideoCard from "../../components/AIResultVideoCard";
+import useUploadVideo from "../../hooks/useUploadVideo";
 
 const EXERCISE_OPTIONS = [
     "squat",
@@ -33,7 +32,7 @@ export default function UploadVideo() {
 
     const handleStartAnalysis = async () => {
         if (!videoFileRef.current) return;
-        
+
         if (!selectedExercise) {
             alert("Please select an exercise first!");
             return;
@@ -44,7 +43,7 @@ export default function UploadVideo() {
         if (url) {
             console.log("Video uploaded to R2:", url);
             setAnalysisStatus("Sending request to AI server...");
-            
+
             try {
                 const response = await fetch("https://django2-yak8.onrender.com/api/analysis/upload/", {
                     method: "POST",
@@ -55,16 +54,16 @@ export default function UploadVideo() {
                         video_url: url,
                         exercise: selectedExercise,
                         mode: "video",
-                        user_id: "user123", // Mock user ID
+                        user_id: "user123",
                     }),
                 });
 
                 const data = await response.json();
-                
+
                 if (response.ok && data.success) {
                     console.log("job_id from API:", data.job_id);
                     setJobId(data.job_id);
-                    setAnalysisStatus(`Analysis started successfully! Job ID: ${data.job_id}`);
+                    setAnalysisStatus(`Analysis started successfully!`);
                 } else {
                     setAnalysisStatus(`Failed to start analysis: ${data.message || 'Unknown error'}`);
                 }
@@ -77,8 +76,7 @@ export default function UploadVideo() {
 
     const getButtonText = () => {
         if (uploading) return `Uploading... ${progress}%`;
-        if (uploadedUrl && jobId) return "✓ Analysis Started";
-        if (uploadedUrl) return "✓ Uploaded — Starting AI...";
+        if (uploadedUrl) return "✓ Uploaded — Start AI analysis";
         return "Start AI analysis";
     };
 
@@ -175,7 +173,7 @@ export default function UploadVideo() {
                     <div className="mt-6 flex w-full justify-center">
                         <button
                             type="button"
-                            disabled={!uploadedVideoUrl || uploading || jobId}
+                            disabled={!uploadedVideoUrl || uploading}
                             onClick={handleStartAnalysis}
                             className="rounded-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 px-8 py-3 text-sm font-bold text-white shadow-[0_8px_24px_rgba(239,68,68,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:from-red-400 hover:via-red-500 hover:to-red-600 hover:shadow-[0_12px_30px_rgba(239,68,68,0.45)] disabled:cursor-not-allowed disabled:bg-none disabled:bg-gray-600 disabled:text-gray-300 disabled:shadow-none disabled:hover:translate-y-0"
                         >
@@ -187,6 +185,3 @@ export default function UploadVideo() {
         </>
     );
 }
-=======
-export { default } from "./upload/UploadVideo.jsx";
->>>>>>> 18cd81db58f99492016c5fc38981480f505c3328

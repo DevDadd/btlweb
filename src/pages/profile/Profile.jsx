@@ -1,10 +1,9 @@
-
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AppBar from '../components/AppBar.jsx';
-import Background from '../components/Background.jsx';
-import { getCourseHistory, getExerciseHistory } from '../hooks/view_history.js';
-import '../styles/profile.css';
+import AppBar from '../../components/AppBar.jsx';
+import Background from '../../components/Background.jsx';
+import { getCourseHistory, getExerciseHistory } from '../../hooks/view_history.js';
+import '../../styles/profile.css';
 
 const SUMMARY_CARDS = [
   { icon: 'fas fa-dumbbell', value: '127', label: 'Completed' },
@@ -18,13 +17,6 @@ export default function Profile() {
   const [user, setUser] = useState({});
   const [courseHistory, setCourseHistory] = useState([]);
   const [exerciseHistory, setExerciseHistory] = useState([]);
-
-  useEffect(() => {
-    const token = localStorage.getItem('auth_token');
-    if (!token) {
-      navigate('/login');
-    }
-  }, [navigate]);
 
   useEffect(() => {
     function readUser() {
@@ -65,21 +57,14 @@ export default function Profile() {
                 <img src="/assets/avatar.jpg" alt="Profile Avatar" />
               </div>
             </div>
+            <button className="camera-btn" type="button" aria-label="Change avatar">
+              📷
+            </button>
           </div>
 
           <div className="column">
             <div className="profile-info">
-              <div className="profile-header">
               <div className="profile-name">{profileName}</div>
-              <button
-                className="body-stats-btn"
-                onClick={() => navigate('/body-stats')}
-                type="button"
-                aria-label="View body statistics"
-              >
-                Body Stats
-              </button>
-              </div>
               <div className="profile-row">
                 <i className="fas fa-user" />
                 <div className="email-info">@{username}</div>
@@ -155,4 +140,3 @@ export default function Profile() {
     </div>
   );
 }
-
