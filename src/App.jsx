@@ -1,15 +1,15 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import Home from './pages/Home.jsx';
-import Exercises from './pages/Exercises.jsx';
-import DetailExercise from './pages/DetailExercise.jsx';
-import DetailCourses from './pages/DetailCourses.jsx';
-import Profile from './pages/Profile.jsx';
-import BodyStats from './pages/BodyStats.jsx';
-import Login from './pages/Login.jsx';
-import Signup from './pages/Signup.jsx';
-import Courses from './pages/Courses.jsx';
-import UploadVideo from './pages/upload/UploadVideo.jsx';
-import BMICalculator from './pages/BMICalculator.jsx';
+import Home from './views/pages/Home.jsx';
+import Exercises from './views/pages/Exercises.jsx';
+import DetailExercise from './views/pages/DetailExercise.jsx';
+import DetailCourses from './views/pages/DetailCourses.jsx';
+import Profile from './views/pages/Profile.jsx';
+import BodyStats from './views/pages/BodyStats.jsx';
+import Login from './views/pages/Login.jsx';
+import Signup from './views/pages/Signup.jsx';
+import Courses from './views/pages/Courses.jsx';
+import UploadVideo from './views/pages/upload/UploadVideo.jsx';
+import BMICalculator from './views/pages/BMICalculator.jsx';
 
 export default function App() {
   return (

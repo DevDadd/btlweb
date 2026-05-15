@@ -5,9 +5,9 @@ import Background from "../../components/Background.jsx";
 import SearchBar from "../../components/SearchBar.jsx";
 import CategoryFilter from "../../components/CategoryFilter.jsx";
 import CoursesGrid from "../../components/CoursesGrid.jsx";
-import getCourses from "../../hooks/courses_service.js";
-import { addCourseHistory } from "../../hooks/view_history.js";
-import "../../styles/exerciselib.css";
+import getCourses from "../../../models/courses_service.js";
+import { addCourseHistory } from "../../../models/view_history.js";
+import "../../../styles/exerciselib.css";
 
 const CATEGORIES = [
     "All",

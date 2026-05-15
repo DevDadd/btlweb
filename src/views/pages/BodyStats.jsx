@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppBar from '../components/AppBar.jsx';
 import Background from '../components/Background.jsx';
-import '../styles/bodystats.css';
+import '../../styles/bodystats.css';
 
 const BODY_STATS_FIELDS = [
   { key: 'height', label: 'Height (cm)', type: 'number', placeholder: '170' },

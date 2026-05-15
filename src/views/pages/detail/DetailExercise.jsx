@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import AppBar from '../../components/AppBar.jsx';
 import Background from '../../components/Background.jsx';
 import ExerciseDetailCardInfo from '../../components/ExerciseDetailCardInfo.jsx';
-import getExercisesDetail from '../../hooks/exercises_detail.js';
+import getExercisesDetail from '../../../models/exercises_detail.js';
 import HowToPerform from '../../components/StepCard.jsx';
 import MuscleAffected from '../../components/MuscleAffected.jsx';
 import AnalyzeFormCard from '../../components/AnalyzeFormCard.jsx';

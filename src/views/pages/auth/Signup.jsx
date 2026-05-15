@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignupCard from "../../components/SignupCard";
 import Background from "../../components/Background.jsx";
-import signup from "../../hooks/signup_service.js";
+import signup from "../../../models/signup_service.js";
 
 export default function Signup() {
   const [errorMessage, setErrorMessage] = useState("");

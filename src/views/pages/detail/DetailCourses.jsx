@@ -4,8 +4,8 @@ import AppBar from "../../components/AppBar";
 import Background from "../../components/Background";
 import CoursesInfoCard from "../../components/CoursesInfoCard";
 import ExerciseListCard from "../../components/ExerciseListCard";
-import getCoursesDetail from "../../hooks/courses_detail_services";
-import { addExerciseHistory } from "../../hooks/view_history";
+import getCoursesDetail from "../../../models/courses_detail_services";
+import { addExerciseHistory } from "../../../models/view_history";
 
 export default function DetailCourses() {
   const location = useLocation();

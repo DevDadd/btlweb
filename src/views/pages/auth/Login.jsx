@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Background from "../../components/Background.jsx";
 import LoginCard from "../../components/LoginCard.jsx";
-import login from "../../hooks/authentication_service.js";
+import login from "../../../models/authentication_service.js";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");

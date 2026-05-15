@@ -3,7 +3,7 @@ import AppBar from "../../components/AppBar";
 import Background from "../../components/Background";
 import VideoUploadCard from "../../components/VideoUploadCard";
 import AIResultVideoCard from "../../components/AIResultVideoCard";
-import useUploadVideo from "../../hooks/useUploadVideo";
+import useUploadVideo from "../../../viewmodels/useUploadVideo";
 
 const STORAGE_KEY = "upload_video_analysis_state";
 

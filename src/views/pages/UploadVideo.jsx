@@ -4,7 +4,7 @@ import AppBar from "../components/AppBar";
 import Background from "../components/Background";
 import VideoUploadCard from "../components/VideoUploadCard";
 import AIResultVideoCard from "../components/AIResultVideoCard";
-import useUploadVideo from "../hooks/useUploadVideo.js";
+import useUploadVideo from "../../viewmodels/useUploadVideo.js";
 
 const EXERCISE_OPTIONS = [
     "squat",

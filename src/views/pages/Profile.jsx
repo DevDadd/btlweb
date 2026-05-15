@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppBar from '../components/AppBar.jsx';
 import Background from '../components/Background.jsx';
-import { getCourseHistory, getExerciseHistory } from '../hooks/view_history.js';
+import { getCourseHistory, getExerciseHistory } from '../../models/view_history.js';
 
 const SUMMARY_CARDS = [
   { icon: 'fas fa-dumbbell', value: '127', label: 'Completed' },

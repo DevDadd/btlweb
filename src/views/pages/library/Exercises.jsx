@@ -5,9 +5,9 @@ import Background from '../../components/Background.jsx';
 import SearchBar from '../../components/SearchBar.jsx';
 import CategoryFilter from '../../components/CategoryFilter.jsx';
 import ExercisesGrid from '../../components/ExercisesGrid.jsx';
-import useExercises from '../../hooks/useExercises.js';
-import { addExerciseHistory } from '../../hooks/view_history.js';
-import '../../styles/exerciselib.css';
+import useExercises from '../../../viewmodels/useExercises.js';
+import { addExerciseHistory } from '../../../models/view_history.js';
+import '../../../styles/exerciselib.css';
 
 const CATEGORIES = [
   'All',
